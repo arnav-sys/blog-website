@@ -60,7 +60,7 @@ def resetpassword(request):
 def getmyblogs(request):
     if request.method == "GET":
         blogs = Blog.objects.filter(user=MainUser)
-        print(blogs)
+        print(MainUser)
         blogsj = serializers.serialize("json",blogs)
         return HttpResponse(blogsj)
 
@@ -81,7 +81,7 @@ def addblog(request):
         global MainUser
         blog = Blog(title=title, imgurl=imgurl,content=content,likes=likes,user=MainUser)
         blog.save()
-        blogj = serializers.serialize("json",blog)
+        blogj = serializers.serialize("json",[blog])
         return HttpResponse(blogj)
 
 def deleteblog(request):
@@ -93,25 +93,23 @@ def deleteblog(request):
         return HttpResponse("blog deleted")
 
 def editblog(request):
-    if request.method == "PATCH":
+    if request.method == "POST":
         global MainUser
+        print("ok")
         raw_blog = json.loads(request.body)
-        title = raw_blog["title"]
-        blog = Blog.objects.get(title=title)
-        print(blog)
-        blog.title = raw_blog["title"]
+        index = raw_blog["index"]
+        index = int(index)
+        blog = Blog.objects.all()[index]
+        
+        print(blog.title)
+        blog.title = raw_blog["newtitle"]
+        print(blog.title)
         blog.content = raw_blog["content"]
         blog.imgurl = raw_blog["imgurl"]
         blog.save()
-        bloglist = []
-        bloglist.append({
-            "title":blog.title,
-            "imgurl":blog.imgurl,
-            "content":blog.content,
-            "likes":blog.likes,
-            "username":MainUser.name,
-        })
-        return HttpResponse(bloglist)
+        print(blog.title)
+        blogj = serializers.serialize("json",[blog])
+        return HttpResponse(blogj)
 
 def likeblog(request):
     if request.method == "PUT":

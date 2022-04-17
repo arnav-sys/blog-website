@@ -7,7 +7,8 @@ export const userSlice = createSlice({
         username:localStorage.getItem("username"),
         email:localStorage.getItem("email"),
         password:localStorage.getItem("password"),
-        urlindex:localStorage.getItem("urlindex")
+        urlindex:localStorage.getItem("urlindex"),
+        editurlindex:localStorage.getItem("editurlindex")
     },
     reducers:{
         addusername: (state,action) => {
@@ -25,6 +26,10 @@ export const userSlice = createSlice({
         addurlindex:(state,action) => {
             state.urlindex = action.payload
             localStorage.setItem("urlindex",action.payload)
+        },
+        addediturlindex:(state,action) => {
+            state.editurlindex = action.payload
+            localStorage.setItem("editurlindex",action.payload)
         }
     }
 })
@@ -32,7 +37,7 @@ export const userSlice = createSlice({
 
 
 
-export const {addusername,addemail,addpassword,addurlindex} = userSlice.actions
+export const {addusername,addemail,addpassword,addurlindex,addediturlindex} = userSlice.actions
 
 export const selectUser = (state) => state
 

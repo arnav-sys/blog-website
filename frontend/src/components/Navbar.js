@@ -15,20 +15,20 @@ export default function Navbar() {
     <a class="nav-link active" aria-current="page" href="/">Home</a>
   </li>
     item2 =   <li class="nav-item">
-    <a class="nav-link" href="#">My-Blogs</a>
+    <a class="nav-link" href="/myblogs">My-Blogs</a>
   </li>
     item3 =   <li class="nav-item">
-    <a class="nav-link" href="#">Profile</a>
+    <a class="nav-link" href="/profile">Profile</a>
   </li>
   }else{
     item1 =        <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="#">Home</a>
   </li>
     item2 =   <li class="nav-item">
-    <a class="nav-link" href="#">Sign up</a>
+    <a class="nav-link" href="/signup">Sign up</a>
   </li>
     item3 =   <li class="nav-item">
-    <a class="nav-link" href="#">Login</a>
+    <a class="nav-link" href="/login">Login</a>
   </li>
   }
     return (

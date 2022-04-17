@@ -31,6 +31,10 @@ function Profile() {
         })
 
     }
+
+    function signout(e){
+
+    }
   return (
       <div>
           <Navbar/>
@@ -52,6 +56,7 @@ function Profile() {
          
                 </div>
                 <div class="mt-5 text-center"><button onClick={handleSubmit} class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+
             </div>
         </div>
     </div>

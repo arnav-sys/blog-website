@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import "./style.css"
 import Navbar from '../components/Navbar'
 import axios from "axios"
+import { connect } from 'react-redux'
+import { addediturlindex } from "../userSlice"
 
-export default class MyBlogs extends Component {
+export class MyBlogs extends Component {
   constructor(props){
       super(props)
       this.state = {
@@ -23,6 +25,10 @@ export default class MyBlogs extends Component {
     const blogstyle = {
       marginTop:"2%"
     }
+    const blogstyles = {
+      marginRight:"50%",
+      marginTop:"5%"
+    }
 
     console.log(this.state.posts)
 
@@ -40,15 +46,18 @@ export default class MyBlogs extends Component {
                 <div class="card-body">
                   <h5 class="card-title">{value.fields.title}</h5>
                   <p class="card-text">Author: {value.fields.user}</p>
-                  <a href={"/myblog/" + index} class="btn btn-primary">Edit the blog</a>
+                  <button className='btn btn-primary' onClick={() => {this.props.addurlindex(index)}}> <a href={"/blog/" + index} class="btn btn-primary">Go to the blog</a></button>
                 </div>
               </div>
             </div>
           })}
- 
+          <div style={blogstyles} class=""><button className='btn btn-primary'> <a href={"/addblog/" } class="btn btn-primary">add new blog</a></button></div>
 </div>
         </div>
       </div>
     )
   }
 }
+
+export default connect(null, {addediturlindex}
+  )(MyBlogs)

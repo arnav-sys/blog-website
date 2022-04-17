@@ -1,12 +1,16 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Navbar from '../components/Navbar'
+import { selectUser } from '../userSlice'
 
-function AddBlog() {
+function EditBlog() {
   const [title, setTitle] = useState("")
   const [imgurl,setImgurl] = useState("")
   const [content,setContent] = useState("")
+  const [index,setIndex] = useState("")
+  const data = useSelector(selectUser)
 
   function handleChangeTitle(e){
     setTitle(e.target.value)
@@ -19,17 +23,23 @@ function AddBlog() {
   function handleChangeImgurl(e){
     setImgurl(e.target.value)
   }
-
   function handleSubmit(){
-      axios.post("http://localhost:8000/addblog",{
-          "title":title,
-          "imgurl":imgurl,
-          "content":content
-      }).then(function re(response){
-          console.log(response.data)
-      })
-      //window.location.href = "http://localhost:3000/myblogs"
-  }
+    let indexs = data.userReducer.editurlindex
+    axios.post("http://localhost:8000/login",{
+      email:data.userReducer.email,
+      password:data.userReducer.password
+    }).then(function(response){
+      axios.post("http://localhost:8000/editblog",{
+        "index":indexs,
+        "newtitle":title,
+        "imgurl":imgurl,
+        "content":content
+    }).then(function re(response){
+        console.log(response.data)
+    })
+    })
+    //window.location.href = "http://localhost:3000/myblogs"
+   }
   return (
     <div>
     <Navbar/>
@@ -43,7 +53,7 @@ function AddBlog() {
               <div class="col-md-12"><label class="labels">content</label><input  type="text" class="form-control" onChange={handleChangeContent} /></div>
    
           </div>
-          <div class="mt-5 text-center"><button onClick={handleSubmit} class="btn btn-primary profile-button" type="button">add blog</button></div>
+          <div class="mt-5 text-center"><button onClick={handleSubmit} class="btn btn-primary profile-button" type="button">edit blog</button></div>
       </div>
   </div>
 </div>
@@ -52,4 +62,4 @@ function AddBlog() {
   )
 }
 
-export default AddBlog
+export default EditBlog

@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import "./style.css"
 import Navbar from '../components/Navbar'
 import axios from "axios"
-import { addurlindex } from '../userSlice'
+import { connect } from "react-redux"
+import { addurlindex } from "../userSlice"
 
-export default class Main extends Component {
+export class Main extends Component {
   constructor(props){
       super(props)
       this.state = {
@@ -13,9 +14,11 @@ export default class Main extends Component {
       this.handlelink = this.handlelink.bind(this)
   }
 
+  
+
   handlelink(index){
-    console.log(this.props)
-    this.props.dispatch(addurlindex(index))
+    console.log("working")
+    this.props.addurlindex(index)
   }
   componentDidMount(){
     axios.get("http://localhost:8000/allblogs").then((response) => {
@@ -31,7 +34,6 @@ export default class Main extends Component {
     }
 
 
-
     return (
       <div>
         <Navbar/>
@@ -45,7 +47,7 @@ export default class Main extends Component {
                 <div class="card-body">
                   <h5 class="card-title">{value.fields.title}</h5>
                   <p class="card-text">Author: {value.fields.user}</p>
-                  <button className='btn btn-primary' onClick={this.handlelink}>  <a href={"/blog/" + index} class="btn btn-primary">Go to the blog</a></button>
+                  <button className='btn btn-primary' onClick={() => {this.props.addurlindex(index)}}><a href={"/blog/" + index} class="btn btn-primary">Go to the blog</a></button>
                 </div>
               </div>
             </div>
@@ -57,3 +59,6 @@ export default class Main extends Component {
     )
   }
 }
+
+export default connect(null, {addurlindex}
+  )(Main)
