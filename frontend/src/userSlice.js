@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
 
 export const userSlice = createSlice({
     name:"user",
@@ -6,6 +7,7 @@ export const userSlice = createSlice({
         username:localStorage.getItem("username"),
         email:localStorage.getItem("email"),
         password:localStorage.getItem("password"),
+        urlindex:localStorage.getItem("urlindex")
     },
     reducers:{
         addusername: (state,action) => {
@@ -19,12 +21,19 @@ export const userSlice = createSlice({
         addpassword:(state,action) => {
             state.password = action.payload
             localStorage.setItem("password",action.payload)
+        },
+        addurlindex:(state,action) => {
+            state.urlindex = action.payload
+            localStorage.setItem("urlindex",action.payload)
         }
     }
 })
 
-export const {addusername,addemail,addpassword} = userSlice.actions
+
+
+
+export const {addusername,addemail,addpassword,addurlindex} = userSlice.actions
 
 export const selectUser = (state) => state
 
-export default userSlice.reducer
+export default userSlice.reducer 

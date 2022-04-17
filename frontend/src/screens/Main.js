@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import "./style.css"
 import Navbar from '../components/Navbar'
 import axios from "axios"
+import { addurlindex } from '../userSlice'
 
 export default class Main extends Component {
   constructor(props){
@@ -9,11 +10,16 @@ export default class Main extends Component {
       this.state = {
         posts : []
       }
+      this.handlelink = this.handlelink.bind(this)
+  }
+
+  handlelink(index){
+    console.log(this.props)
+    this.props.dispatch(addurlindex(index))
   }
   componentDidMount(){
     axios.get("http://localhost:8000/allblogs").then((response) => {
       this.setState({posts:response.data})
-      console.log(this.state.posts)
     })
   }
   render() {
@@ -24,7 +30,6 @@ export default class Main extends Component {
       marginTop:"2%"
     }
 
-    console.log(this.state.posts)
 
 
     return (
@@ -40,7 +45,7 @@ export default class Main extends Component {
                 <div class="card-body">
                   <h5 class="card-title">{value.fields.title}</h5>
                   <p class="card-text">Author: {value.fields.user}</p>
-                  <a href={"/blog/" + index} class="btn btn-primary">Go to the blog</a>
+                  <button className='btn btn-primary' onClick={this.handlelink}>  <a href={"/blog/" + index} class="btn btn-primary">Go to the blog</a></button>
                 </div>
               </div>
             </div>
